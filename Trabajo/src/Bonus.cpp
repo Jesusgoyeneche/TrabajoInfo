@@ -1,6 +1,6 @@
 #include "Bonus.h"
 #include "glut.h"
-
+//cambios
 
 Bonus::Bonus(void)
 {
