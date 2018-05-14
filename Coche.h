@@ -16,5 +16,6 @@ public:
 	void SetPos(float px, float py, float pz);
 	Vector3D GetPos();
 	friend class Interaccion;
+	friend class Mundo;
 };
 
