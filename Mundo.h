@@ -14,6 +14,7 @@ private:
 	Paisaje paisaje;
 	Bonus positivo, negativo;
 	Cielo cielo;
+	int girar; //variable para saber hacia que lado gira
 public:
 	void Tecla(unsigned char key);
 	void Inicializa();
