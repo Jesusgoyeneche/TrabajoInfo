@@ -18,7 +18,7 @@ private:
 public:
 	void Tecla(unsigned char key);
 	void Inicializa();
-	void RotarOjo();
+	void RotarOjo(float dif);
 	void Mueve(float t);
 	void Dibuja();
 	void teclaEspecial(unsigned char key);
