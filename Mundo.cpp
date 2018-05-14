@@ -3,13 +3,13 @@
 #include <math.h>
 #include "Paisaje.h"
 
-void Mundo::RotarOjo()
+void Mundo::RotarOjo(float dif)
 {
 	float d, theta;
 	d = ojo.x * ojo.x + ojo.z * ojo.z;
 	d = sqrt(d);
 	theta = (atan2(ojo.z, ojo.x));
-	theta = theta + 0.01F;
+	theta = theta + dif;
 	ojo.x = d * cos(theta);
 	ojo.z = d * sin(theta);
 }
@@ -22,16 +22,34 @@ void Mundo::Dibuja()
 	cielo.Dibuja();
 	coche.Dibuja();
 	positivo.Dibuja();
-	float r = 20, cx = 0, cz = 0;
+	float r = 40, cx = 0, cz = 0;
+	glDisable(GL_LIGHTING);
 	glBegin(GL_POLYGON);
-	glColor3ub(255, 0, 0);
-	for (float i = 0; i < 5; i += 0.01f)
+	glColor3ub(100, 100, 100);
+	for (float i = 30; i < 40; i += 0.01f)
 	{
-		cx = r * cos(i);
-		cz = r * sin(i);
-		glVertex3f(cx, 0.1f, cz-50);
+		cx = r * cos(i) + 30;
+		cz = r * sin(i) - 50;
+		if (cx <= 30 && cx >= -10) //cz <= -50 && cz >= -90)
+		{
+			glVertex3f(cx, 0.0f, cz);
+		}
 	}
 	glEnd();
+	glEnable(GL_LIGHTING);
+
+	float r2 = 20, cx2 = 0, cz2 = 0;
+	glDisable(GL_LIGHTING);
+	glBegin(GL_POLYGON);
+	glColor3ub(0, 100, 0);
+	for (float j = 0; j < 20; j += 0.01f)
+	{
+		cx2 = r2 * cos(j);
+		cz2 = r2 * sin(j) - 50;
+		glVertex3f(cx2 + 30, 0.01f, cz2);
+	}
+	glEnd();
+	glEnable(GL_LIGHTING);
 }
 
 void Mundo::Mueve(float t)
@@ -40,6 +58,10 @@ void Mundo::Mueve(float t)
 	cielo.Mueve(coche.GetPos().z - 100);
 	ojo = ojo + v_ojo * t + a_ojo * (0.5f*t*t);
 	v_ojo = v_ojo + a_ojo * t;
+	if (girar == 2)
+		RotarOjo(0.01f);
+	if (girar == 1)
+		RotarOjo(-0.01f);
 	Interaccion::choque(coche, positivo, v_ojo);
 }
 
@@ -47,7 +69,7 @@ void Mundo::Inicializa()
 {
 	ojo.x = 0;
 	ojo.y = 7.5;
-	ojo.z = 30;
+	ojo.z =30;
 	coche.SetPos(0.0f, 0.0f, 0.0f);
 	cielo.SetPos(-70, 0, -100, 70, 70, -100);
 	positivo.SetPos(0.0f,0.0f,-10.0f);
@@ -64,22 +86,25 @@ void Mundo::teclaEspecial(unsigned char key)
 		coche.SetVel(-5.0f, 0.0f, 0.0f);
 		v_ojo.x = -5.0f;
 		v_ojo.z = 0.0f;
+		girar = 1;
 		break;
 	case GLUT_KEY_RIGHT:
 		coche.SetVel(5.0f, 0.0f, 0.0f);
 		v_ojo.x = 5.0f;
 		v_ojo.z = 0.0f;
+		girar = 2;
 		break;
 	case GLUT_KEY_UP:
 		coche.SetVel(0.0f, 0.0f, -5.0f);
 		v_ojo.z = -5.0f;
 		v_ojo.x = 0.0f;
+		girar = 0;
 		break;
 	case GLUT_KEY_DOWN:
 		coche.SetVel(0.0f, 0.0f, 5.0f);
 		v_ojo.z = 5.0f;
 		v_ojo.x = 0.0f;
+		girar = 0;
 		break;
 	}
 }
-
