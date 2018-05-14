@@ -6,6 +6,7 @@
 void Mundo::RotarOjo(float dif)
 {
 	float d, theta;
+	int referencia[3][3]={{cos(theta),-sin(theta),0},{sin(theta),cos(theta),0},{0,0,1}};
 	d = ojo.x * ojo.x + ojo.z * ojo.z;
 	d = sqrt(d);
 	theta = (atan2(ojo.z, ojo.x));
@@ -58,10 +59,10 @@ void Mundo::Mueve(float t)
 	cielo.Mueve(coche.GetPos().z - 100);
 	ojo = ojo + v_ojo * t + a_ojo * (0.5f*t*t);
 	v_ojo = v_ojo + a_ojo * t;
-	if (girar == 2)
-		RotarOjo(0.01f);
-	if (girar == 1)
+	if (girar == 2&&coche.posicion.z<=-50)
 		RotarOjo(-0.01f);
+	if (girar == 1&&coche.posicion.z<=-50)
+		RotarOjo(0.01f);
 	Interaccion::choque(coche, positivo, v_ojo);
 }
 
