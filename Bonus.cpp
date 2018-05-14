@@ -26,3 +26,4 @@ posicion.y=iy;
 posicion.z=iz;
 
 }
+//no se ve nada
