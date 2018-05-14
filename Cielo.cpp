@@ -6,9 +6,13 @@ void Cielo::Dibuja()
 	glDisable(GL_LIGHTING);
 	glColor3ub(rojo, verde, azul);
 	glBegin(GL_POLYGON);
+		glColor3ub(255, 255, 50);
 		glVertex3d(limite1.x, limite1.y, limite1.z);
+		glColor3ub(0, 255, 255);
 		glVertex3d(limite2.x, limite1.y, limite1.z);
+		glColor3ub(0, 255, 255);
 		glVertex3d(limite2.x, limite2.y, limite2.z);
+		glColor3ub(255, 120, 0);
 		glVertex3d(limite1.x, limite2.y, limite2.z);
 	glEnd();
 	glEnable(GL_LIGHTING);

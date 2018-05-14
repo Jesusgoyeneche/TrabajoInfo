@@ -1,6 +1,6 @@
 #include "Bonus.h"
 #include "glut.h"
-
+//Jesus es un payaso
 
 Bonus::Bonus(void)
 {
@@ -26,4 +26,3 @@ posicion.y=iy;
 posicion.z=iz;
 
 }
-//no se ve nada

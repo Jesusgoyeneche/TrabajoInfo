@@ -22,6 +22,16 @@ void Mundo::Dibuja()
 	cielo.Dibuja();
 	coche.Dibuja();
 	positivo.Dibuja();
+	float r = 20, cx = 0, cz = 0;
+	glBegin(GL_POLYGON);
+	glColor3ub(255, 0, 0);
+	for (float i = 0; i < 5; i += 0.01f)
+	{
+		cx = r * cos(i);
+		cz = r * sin(i);
+		glVertex3f(cx, 0.1f, cz-50);
+	}
+	glEnd();
 }
 
 void Mundo::Mueve(float t)
@@ -39,8 +49,7 @@ void Mundo::Inicializa()
 	ojo.y = 7.5;
 	ojo.z = 30;
 	coche.SetPos(0.0f, 0.0f, 0.0f);
-	cielo.SetPos(-1000, 0, -100, 1000, 200, -100);
-	cielo.SetColor(255, 0, 255);
+	cielo.SetPos(-70, 0, -100, 70, 70, -100);
 	positivo.SetPos(0.0f,0.0f,-10.0f);
 }
 
