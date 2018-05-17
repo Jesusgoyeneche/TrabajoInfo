@@ -26,7 +26,6 @@ void Coche::Mueve(float t)
 	posicion = posicion + velocidad * t + aceleracion * (0.5f*t*t);
 	velocidad = velocidad + aceleracion * t;
 }
-
 void Coche::SetVel(float vx, float vy, float vz)
 {
 	velocidad.x = vx;
@@ -39,9 +38,4 @@ void Coche::SetPos(float px, float py, float pz)
 	posicion.x = px;
 	posicion.y = py;
 	posicion.z = pz;
-}
-
-Vector3D Coche::GetPos()
-{
-	return posicion;
 }
