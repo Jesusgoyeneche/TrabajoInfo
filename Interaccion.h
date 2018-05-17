@@ -7,6 +7,5 @@ class Interaccion
 public:
 	Interaccion(void);
 	~Interaccion(void);
-	static void choque(Coche &c, Bonus b, Vector3D &o);
+	static void choque(Coche &h, Bonus b);
 };
-
