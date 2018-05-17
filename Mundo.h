@@ -4,6 +4,7 @@
 #include "Bonus.h"
 #include "Interaccion.h"
 #include "Cielo.h"
+#include"Camara.h"
 class Mundo
 {
 private: 
@@ -14,6 +15,7 @@ private:
 	Paisaje paisaje;
 	Bonus positivo, negativo;
 	Cielo cielo;
+	Camara camara;
 	int girar; //variable para saber hacia que lado gira
 public:
 	void Tecla(unsigned char key);
