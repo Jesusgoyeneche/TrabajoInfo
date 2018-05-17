@@ -5,19 +5,15 @@
 
 void Mundo::RotarOjo(float dif)
 {
-	float d, theta;
-	int referencia[3][3]={{cos(theta),-sin(theta),0},{sin(theta),cos(theta),0},{0,0,1}};
-	d = ojo.x * ojo.x + ojo.z * ojo.z;
-	d = sqrt(d);
-	theta = (atan2(ojo.z, ojo.x));
-	theta = theta + dif;
-	ojo.x = d * cos(theta);
-	ojo.z = d * sin(theta);
+	float d, theta=0;
+	Vector3D dis =((coche.GetPos().x-ojo.x,0,coche.GetPos().z-ojo.z));
+	ojo.x*=-1; 
+	ojo.z = dis.z ;
 }
 void Mundo::Dibuja()
 {
-	gluLookAt(ojo.x, ojo.y, ojo.z,  // posicion del ojo
-		coche.GetPos().x, ojo.y, coche.GetPos().z,      // hacia que punto mira  (0,0,0) 
+	gluLookAt(camara.posicion.x, camara.posicion.y, camara.posicion.z,  // posicion del ojo
+		coche.GetPos().x, camara.posicion.y, coche.GetPos().z,      // hacia que punto mira  (0,0,0) 
 			0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)    
 	paisaje.Dibuja();
 	cielo.Dibuja();
@@ -57,20 +53,19 @@ void Mundo::Mueve(float t)
 {
 	coche.Mueve(0.025f);
 	cielo.Mueve(coche.GetPos().z - 100);
-	ojo = ojo + v_ojo * t + a_ojo * (0.5f*t*t);
-	v_ojo = v_ojo + a_ojo * t;
+	camara.velocidad=coche.GetVel();
+    camara.Mueve(0.025f);
 	if (girar == 2&&coche.posicion.z<=-50)
-		RotarOjo(-0.01f);
+	{ 
+	RotarOjo(-0.01f);
+	}
 	if (girar == 1&&coche.posicion.z<=-50)
 		RotarOjo(0.01f);
-	Interaccion::choque(coche, positivo, v_ojo);
+	Interaccion::choque(coche, positivo);
 }
 
 void Mundo::Inicializa()
 {
-	ojo.x = 0;
-	ojo.y = 7.5;
-	ojo.z =30;
 	coche.SetPos(0.0f, 0.0f, 0.0f);
 	cielo.SetPos(-70, 0, -100, 70, 70, -100);
 	positivo.SetPos(0.0f,0.0f,-10.0f);
@@ -85,26 +80,18 @@ void Mundo::teclaEspecial(unsigned char key)
 	{
 	case GLUT_KEY_LEFT:
 		coche.SetVel(-5.0f, 0.0f, 0.0f);
-		v_ojo.x = -5.0f;
-		v_ojo.z = 0.0f;
 		girar = 1;
 		break;
 	case GLUT_KEY_RIGHT:
 		coche.SetVel(5.0f, 0.0f, 0.0f);
-		v_ojo.x = 5.0f;
-		v_ojo.z = 0.0f;
 		girar = 2;
 		break;
 	case GLUT_KEY_UP:
 		coche.SetVel(0.0f, 0.0f, -5.0f);
-		v_ojo.z = -5.0f;
-		v_ojo.x = 0.0f;
 		girar = 0;
 		break;
 	case GLUT_KEY_DOWN:
 		coche.SetVel(0.0f, 0.0f, 5.0f);
-		v_ojo.z = 5.0f;
-		v_ojo.x = 0.0f;
 		girar = 0;
 		break;
 	}
